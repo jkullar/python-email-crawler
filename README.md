@@ -19,6 +19,11 @@ Start the search with a keyword. We use "iphone developers" as an example.
 
 	python email_crawler.py "iphone developers"
 
+The script will ask for 3 inputs. 
+1. Time Duration: This is the age of google results. Enter "h" = hour; "d" = day; "m" = month; "y" = year; 
+2. Website Url like "craigslist.org"
+3. Number of results to crawl
+
 The search and crawling process will take quite a while, as it retrieve up to 500 search results (from Google), and crawl up to 2 level deep. It should crawl around 10,000 webpages :)
 
 After the process finished, run this command to get the list of emails
