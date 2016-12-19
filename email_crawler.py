@@ -21,7 +21,7 @@ url_regex = re.compile('<a\s.*?href=[\'"](.*?)[\'"].*?>')
 # url_regex = re.compile('<a\s(?:.*?\s)*?href=[\'"](.*?)[\'"].*?>')
 
 # Maximum number of search results to start the crawl
-MAX_SEARCH_RESULTS = 500
+
 
 EMAILS_FILENAME = 'data/emails.csv'
 DOMAINS_FILENAME = 'data/domains.csv'
@@ -57,9 +57,14 @@ def crawl(keywords):
 	# eg http://www.google.com/search?q=singapore+web+development&start=0
 	# Next page: https://www.google.com/search?q=singapore+web+development&start=10
 	# Google search results are paged with 10 urls each. There are also adurls
+	hdwmy = input("Enter Time Duration with double quotes: ")
+	site_to_search = input("Enter the site with double quotes: ")
+	MAX_SEARCH_RESULTS = input("Number of results to crawl: ")
 	for page_index in range(0, MAX_SEARCH_RESULTS, 10):
 		query = {'q': keywords}
-		url = 'http://www.google.com/search?' + urllib.urlencode(query) + '&start=' + str(page_index)
+		#url = 'http://www.google.com/search?' + urllib.urlencode(query) + '&start=' + str(page_index) + '&tbs=qdr:h'
+		url = 'http://www.google.com/search?' + urllib.urlencode(query) + '+site:' + site_to_search + '&start=' + str(page_index) + '&tbs=qdr:'+ hdwmy
+		
 		data = retrieve_html(url)
 		# 	print("data: \n%s" % data)
 		for url in google_url_regex.findall(data):
@@ -118,7 +123,9 @@ def find_emails_2_level_deep(url):
 	"""
 	html = retrieve_html(url)
 	email_set = find_emails_in_html(html)
-
+	return email_set
+	
+	"""
 	if (len(email_set) > 0):
 		# If there is a email, we stop at level 1.
 		return email_set
@@ -139,7 +146,7 @@ def find_emails_2_level_deep(url):
 
 		# We return an empty set
 		return set()
-
+		"""
 
 def find_emails_in_html(html):
 	if (html == None):
